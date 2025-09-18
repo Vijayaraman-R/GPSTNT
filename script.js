@@ -20,7 +20,7 @@ window.onload = () => {
       fadeTextContainer.appendChild(span);
       setTimeout(() => {
         span.style.opacity = 1;
-      }, 100 * index);
+      }, 80 * index);
     });
   }
 
@@ -31,6 +31,7 @@ window.onload = () => {
       loadingScreen.style.display = "none";
       mainContent.style.display = "block";
       fadeInText();
+      ScrollTrigger.refresh(); // 🔑 force recalculation after reveal
     }, 1000);
   }
 
@@ -44,7 +45,7 @@ window.onload = () => {
   const slides = document.querySelectorAll(".hero-slide");
 
   function showSlides() {
-    slides.forEach(s => s.style.opacity = 0);
+    slides.forEach(s => (s.style.opacity = 0));
     slideIndex++;
     if (slideIndex > slides.length) slideIndex = 1;
     slides[slideIndex - 1].style.opacity = 1;
@@ -56,41 +57,49 @@ window.onload = () => {
   // -------------------- GSAP Animations --------------------
   gsap.registerPlugin(ScrollTrigger);
 
-const panels = document.querySelectorAll(".story-panel");
+  const panels = document.querySelectorAll(".story-panel");
 
-// Set background images (skip video panels)
-panels.forEach(panel => {
-  const video = panel.querySelector("video");
-  if (!video && panel.dataset.image) {
-    panel.style.backgroundImage = `url(${panel.dataset.image})`;
-  }
-});
-
-// Animate panels
-panels.forEach((panel, i) => {
-  gsap.fromTo(panel, 
-    { opacity: 0 }, 
-    { 
-      opacity: 1,
-      scrollTrigger: {
-        trigger: panel,
-        start: "top 80%", // fade in earlier
-        end: "bottom 20%",
-        scrub: true
-      }
+  panels.forEach(panel => {
+    const video = panel.querySelector("video");
+    if (!video && panel.dataset.image) {
+      panel.style.backgroundImage = `url(${panel.dataset.image})`;
     }
-  );
+  });
 
-  if (i < panels.length - 1) {
-    gsap.to(panel, {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: panels[i + 1],
-        start: "top 50%",
-        end: "bottom 20%",
-        scrub: true
+  panels.forEach((panel, i) => {
+    gsap.fromTo(
+      panel,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: panel,
+          start: "top 70%",
+          end: "bottom 30%",
+          scrub: 1.2
+        }
       }
-    });
-  }
-});
+    );
+
+    if (i < panels.length - 1) {
+      gsap.to(panel, {
+        opacity: 0,
+        y: -50,
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: panels[i + 1],
+          start: "top 70%",
+          end: "bottom 30%",
+          scrub: 1.2
+        }
+      });
+    }
+  });
+
+  // 🔑 Ensure GSAP recalculates after everything is loaded
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 1000);
 };
