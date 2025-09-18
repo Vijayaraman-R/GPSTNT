@@ -1,0 +1,279 @@
+/* ------------------ Loading Screen ------------------ */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#intro-video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ------------------ Main Content ------------------ */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Libre Caslon Text', serif;
+  background: #ffffff;
+  color: #222;
+  overflow-x: hidden;
+}
+
+/* ------------------ Navbar ------------------ */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #D2B48C; /* Tan */
+  z-index: 1000;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5em;
+  white-space: nowrap;
+}
+
+.top-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.social-link, .phone-link {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.social-link svg, .phone-link svg {
+  margin-right: 0.4em;
+}
+
+.phones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 180px;
+}
+
+/* ------------------ Hero Section ------------------ */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-slide h2 {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ------------------ Punchline ------------------ */
+.punchline {
+  padding: 6em 2em;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+/* ------------------ Storytelling Panels ------------------ */
+.storytelling {
+  position: relative;
+  width: 100%;
+  min-height: 400vh; /* enough scrollable height */
+}
+
+.story-panel {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  opacity: 0; /* we animate this with GSAP */
+}
+
+.story-panel video {
+  width: 80%;
+  max-height: 80%;
+  opacity: 0;
+}
+
+.story-text {
+  position: absolute;
+  bottom: 10%;
+  width: 80%;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 0 20px rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+/* ------------------ Planner Section ------------------ */
+.planner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4em 2em;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.planner-text {
+  flex: 1;
+  margin-right: 2em;
+}
+
+.planner-photo img {
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+/* ------------------ Packages Grid ------------------ */
+.packages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  padding: 4em 2em;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.package {
+  background: #f2f2f2;
+  padding: 2em;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ------------------ Testimonials ------------------ */
+.testimonials {
+  display: flex;
+  justify-content: space-around;
+  padding: 4em 2em;
+  flex-wrap: wrap;
+}
+
+.testimonial {
+  background: #f9f9f9;
+  padding: 2em;
+  border-radius: 8px;
+  flex: 1;
+  margin: 1em;
+}
+
+/* ------------------ Footer ------------------ */
+footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 2em;
+  background: #ADD8E6; /* Light Blue */
+  color: #000;
+}
+
+/* ------------------ Fade Text (after loading) ------------------ */
+.fade-text {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.letter {
+  opacity: 0;
+  display: inline-block;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.letter.orange {
+  color: #FF8C00;
+}
+
+.letter.white {
+  color: #fff;
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 900px) {
+  .packages {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .planner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .planner-photo img {
+    max-width: 80%;
+    margin-top: 1.5em;
+  }
+}
+
+@media (max-width: 600px) {
+  .packages {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-slide h2 {
+    font-size: 1.2rem;
+    padding: 0.4em 0.6em;
+  }
+
+  .top-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    width: 100%;
+  }
+
+  .phones {
+    min-width: auto;
+  }
+}
